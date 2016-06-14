@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.chord path {
+  fill-opacity: .67;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+// From http://mkweb.bcgsc.ca/circos/guide/tables/
+var matrix = 
+[
+[368.0, 176.0, 128.0, 64.0, 720.0, 224.0, 176.0, 496.0, 128.0, 160.0, 144.0, 80.0, 272.0, 48.0, 160.0] ,
+[391.0, 187.0, 136.0, 68.0, 765.0, 238.0, 187.0, 527.0, 136.0, 170.0, 153.0, 85.0, 289.0, 51.0, 170.0] ,
+[529.0, 253.0, 184.0, 92.0, 1035.0, 322.0, 253.0, 713.0, 184.0, 230.0, 207.0, 115.0, 391.0, 69.0, 230.0] ,
+[161.0, 77.0, 56.0, 28.0, 315.0, 98.0, 77.0, 217.0, 56.0, 70.0, 63.0, 35.0, 119.0, 21.0, 70.0] ,
+[1702.0, 814.0, 592.0, 296.0, 3330.0, 1036.0, 814.0, 2294.0, 592.0, 740.0, 666.0, 370.0, 1258.0, 222.0, 740.0] ,
+[345.0, 165.0, 120.0, 60.0, 675.0, 210.0, 165.0, 465.0, 120.0, 150.0, 135.0, 75.0, 255.0, 45.0, 150.0] ,
+[230.0, 110.0, 80.0, 40.0, 450.0, 140.0, 110.0, 310.0, 80.0, 100.0, 90.0, 50.0, 170.0, 30.0, 100.0] ,
+[644.0, 308.0, 224.0, 112.0, 1260.0, 392.0, 308.0, 868.0, 224.0, 280.0, 252.0, 140.0, 476.0, 84.0, 280.0] ,
+[138.0, 66.0, 48.0, 24.0, 270.0, 84.0, 66.0, 186.0, 48.0, 60.0, 54.0, 30.0, 102.0, 18.0, 60.0] ,
+[207.0, 99.0, 72.0, 36.0, 405.0, 126.0, 99.0, 279.0, 72.0, 90.0, 81.0, 45.0, 153.0, 27.0, 90.0] ,
+[230.0, 110.0, 80.0, 40.0, 450.0, 140.0, 110.0, 310.0, 80.0, 100.0, 90.0, 50.0, 170.0, 30.0, 100.0] ,
+[138.0, 66.0, 48.0, 24.0, 270.0, 84.0, 66.0, 186.0, 48.0, 60.0, 54.0, 30.0, 102.0, 18.0, 60.0] ,
+[851.0, 407.0, 296.0, 148.0, 1665.0, 518.0, 407.0, 1147.0, 296.0, 370.0, 333.0, 185.0, 629.0, 111.0, 370.0] ,
+[184.0, 88.0, 64.0, 32.0, 360.0, 112.0, 88.0, 248.0, 64.0, 80.0, 72.0, 40.0, 136.0, 24.0, 80.0] ,
+[345.0, 165.0, 120.0, 60.0, 675.0, 210.0, 165.0, 465.0, 120.0, 150.0, 135.0, 75.0, 255.0, 45.0, 150.0] 
+];
+//var matrix = [];
+
+
+//d3.csv("/assets/numbers_chord_matrix_small.csv", function(data){
+    //data.forEach(function(d){ d = +d; });   
+//    console.log(data);     
+//});
+//console.log(matrix);
+var chord = d3.layout.chord()
+    .padding(.01)
+    .sortSubgroups(d3.descending)
+    .matrix(matrix);
+
+var width = 960,
+    height = 500,
+    innerRadius = Math.min(width, height) * .44,
+    outerRadius = innerRadius* 1.1;
+
+var fill = d3.scale.category20c();
+/*ordinal()
+    .domain(d3.range(10))
+    .range(['#A498A0', '#3FB524', '#4CB119', '#6672E7', '#3133D0', '#9E72A0', '#3275CE', '#62B3D1', '#BE5751', '#65C806']);
+*/
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+svg.append("g").selectAll("path")
+    .data(chord.groups)
+  .enter().append("path")
+  .attr("id", function(d, i){return "group-" + i;})
+    .style("fill", function(d) { return fill(d.index); })
+    .style("stroke", function(d) { return fill(d.index); })
+    .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+    .on("mouseover", fade(.1))
+    .on("mouseout", fade(1));
+    
+var country_labels = ['Panama', 'Luxembourg', 'Singapore', 'China', 'Hong Kong', 'United States', 'Guernsey', 'Switzerland', 'Russia', 'Jersey', 'IsleOfMan', 'URY', 'United Kingdom', 'Taiwan', 'Cyprus'];
+
+svg.append("g").selectAll("text")
+        .data(chord.groups)
+    .enter()
+    .append("sgv:text")
+        .attr("dx", 1)
+        .attr("dy", 15)
+
+        //.style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+        .append("svg:textPath")
+            .attr("xlink:href", function(d, i){return "#group-" + i;})
+            .text(function(d,i) {return country_labels[i];});
+            
+
+var ticks = svg.append("g").selectAll("g")
+    .data(chord.groups)
+  .enter().append("g").selectAll("g")
+    .data(groupTicks)
+  .enter().append("g")
+    .attr("transform", function(d) {
+      return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+          + "translate(" + outerRadius + ",0)";
+    });
+
+ticks.append("line")
+    .attr("x1", 1)
+    .attr("y1", 0)
+    .attr("x2", 5)
+    .attr("y2", 0)
+    .style("stroke", "#000");
+
+ticks.append("text")
+    .attr("x", 8)
+    .attr("dy", ".35em")
+    .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+    .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+    .text(function(d) { return d.label; });
+
+svg.append("g")
+    .attr("class", "chord")
+  .selectAll("path")
+    .data(chord.chords)
+  .enter().append("path")
+    .attr("d", d3.svg.chord().radius(innerRadius))
+    .style("fill", function(d) { return fill(d.target.index); })
+    .style("opacity", 1);
+    
+
+
+// Returns an array of tick angles and labels, given a group.
+function groupTicks(d) {
+  var k = (d.endAngle - d.startAngle) / d.value;
+  return d3.range(0, d.value, 1000).map(function(v, i) {
+    return {
+      angle: v * k + d.startAngle,
+//      label: i % 2000 ? null : v / 1000
+    };
+  });
+}
+
+// Returns an event handler for fading a given chord group.
+function fade(opacity) {
+  return function(g, i) {
+    svg.selectAll(".chord path")
+        .filter(function(d) { return d.source.index != i && d.target.index != i; })
+      .transition()
+        .style("opacity", opacity);
+  };
+}
+
+</script>
