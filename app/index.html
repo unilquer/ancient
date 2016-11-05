@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <style>
 text {
   font: 10px sans-serif;
@@ -39,7 +38,7 @@ body {
 
 <html lang="en">
 <head>
-    <title>The Panama Papers</title>
+    <title>Airbnb</title>
 
     <meta charset="UTF-8">
 
@@ -54,87 +53,68 @@ body {
 <body>
 
 <div class="container">
-    <h2>Visualizing The Panama Papers</h2>
-    <h4>Danish Shabbir and Ilker Karakasoğlu</h4>
+    <h2>A\B Testing the Minimum Length Requirement in Guest Messages</h2>
 
     <p>
-        The Panama papers are by far the biggest leak of documents related to offshore entities, which were created by the Panamian law firm Mossack Fonseca. After obtaining the data from an anonymous source, the German newspaper Süddeutsche Zeitung teamed up with media organizations from around the world as <a href="https://panamapapers.icij.org/" target="_blank"> the International Consortium of Investigative Journalists (ICIJ) </a> to investigate these documents. The news stories and part of the data were published in April 2016, after a yearlong investigation.
-
-</p>
-<p>
         We visualize this dataset using <a href="https://d3js.org/" target="_blank">d3js</a>, <a href="http://square.github.io/crossfilter/" target="_blank">crossfilter</a> and <a href="https://dc-js.github.io/dc.js/" target="_blank">dc.js</a>.
 
         A world map, formed with geojson polygons as a choropleth chart, is linked with a DC.js Bar and Pie Chart to illustrate the spatial and temporal spread of these offshore entities. 
 
         Using D3.js we have made a bubble and chord chart to indicate the network of intermediaries that enable tax evasion at the global scale. 
-
-
-        GeoJson Polygon associated with
-        crossfilter dimension and group using a choropleth chart. 
+        
+        (This page will be removed after the data challenge evaluation is complete.) 
     </p>
 
 <div class="row">
 
-    <div id="world-chart">
-        <a class="reset" href="javascript:worldChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-        <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
-        <div class="clearfix"></div>
-</div>
+
 </div>
 
-<div>
-        <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+
+<div class="row">
+    <div id="acceptance-chart" >
+        <centered content>
+
+        <strong>Accepted and rejected inquiries by groups</strong>
+        <p> This </p>
+        <a class="reset" href="javascript:abChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <div class="clearfix"></div>
+    </div>   
+
+
+
 </div>
 
 <div class="row">
-     <div id="incrop_date-chart">
-        <strong>Companies Incorporated By Year</strong> 
+ 
+
+     <div id="month_hist-chart">
+        <strong>Number of inquiries by the week of the year</strong> 
+        <p> S</p>
+        <a class="reset" href="javascript:monthHistChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+
+    <div id="message_hist-chart">
+        <strong>Number of inquiries sent by the message length</strong> 
         <p> Select subsets of this chart 
             to visualize the temporal 
             spread of offshore holding entities</p>
-        <a class="reset" href="javascript:incropDateChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-
+        <a class="reset" href="javascript:messageHistChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <div class="clearfix"></div>
     </div>
 
-    <div id="juris-chart">
-        <strong>Volume of Offshore Holding Companies by Jurisdiction</strong>
-        <p> This chart presents entities 
-        with respect <br> to the tax haven 
-        jurisdiction they are incorporated under </p>
-        <a class="reset" href="javascript:jurisChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-        <div class="clearfix"></div>
-    </div>
 </div>
 
-    
 
     <div class="clearfix"></div>
 
-    <div id="bubble-chart">
-          <strong>Global Extent of Entities Exposed in The Panama Papers</strong>
-          <p>
-         Panama being an offshore financial center- less formally known as a tax haven- had customers all around the world. Each bubble below is sized proportional to the number of entities in the Panama Papers from the country of the bubble. Not coincidentally the countries of the biggest bubbles have been associated with tax evasion on several occasions as well. </p>
-        <div class="clearfix"></div>
-    </div>
 
-  <div class="clearfix"></div>
-
-   <div id="chord-chart" style="align:center;">
-          <strong> Where The Intermediaries Originate </strong>
-          <p>
-          Intermediary officers enable tax evasion by assisting in the creation of off shore business holdings. The chord chart shows the business relations between the top 15 countries the intermediaries originate from and the countries where the entities are held. Hong Kong, United Kingdom and Switzerland are shown to have the highest number of intermediary officers.</p>
-        <div class="clearfix"></div>
-    </div>
 
  
-    <div id="round-chart">
-        <p> <br> </p>
-        <div class="clearfix"></div>
-        <p>While The Panama Papers is perhaps biggest data leak ever witnessed, our investigation shows that the significant spatial and temporal relationships in the data can be made intelligible using very simple, albeit well connected, visualizations.</p>
-        <a class="reset" href="javascript:roundChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-
-        
+    <div id="round-chart">     
     </div>
 
 </div>
